@@ -41,10 +41,10 @@ Se você deseja contribuir, abra uma issue ou envie um pull request. Ficarei fel
 
 Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE.md](LICENSE.md) para obter detalhes.
 
-## Inatalando
+## Instalando
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `file_manager` to your list of dependencies in `mix.exs`:
+Se [disponível no Hex](https://hex.pm/docs/publish), o pacote pode ser instalado
+adicionando `file_manager` à sua lista de dependências no arquivo `mix.exs`:
 
 ```elixir
 def deps do
@@ -54,7 +54,6 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/file_manager](https://hexdocs.pm/file_manager).
-
+A documentação pode ser gerada com [ExDoc](https://github.com/elixir-lang/ex_doc)
+e publicada no [HexDocs](https://hexdocs.pm). Uma vez publicada, a documentação
+pode ser encontrada em [https://hexdocs.pm/file_manager](https://hexdocs.pm/file_manager).
