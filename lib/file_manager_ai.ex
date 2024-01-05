@@ -174,6 +174,7 @@ defmodule FileManagerAi do
 
   def converter_artigo_html do
     #chama a função converte_artigo_html do módulo Pandoc
+    lista_informativa()
     GerenciadorDeTarefas.rodar_tarefa(:chamar_pandoc)
     display_menu()
   end

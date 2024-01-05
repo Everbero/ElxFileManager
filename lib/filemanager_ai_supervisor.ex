@@ -123,7 +123,6 @@ defmodule FileManagerAiTaskSupervisor do
 
   #chama a funcao de criar pagina do pandoc
   def chamar_pandoc do
-    FileManagerAi.lista_informativa()
     artigo = IO.gets("Digite o nome do artigo que deseja criar a página: ") |> String.trim()
     #se o artigo for um diretorio continua
     if FileCRUD.existe_pasta?(artigo) do

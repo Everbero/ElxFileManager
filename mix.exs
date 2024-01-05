@@ -24,9 +24,7 @@ defmodule FileManager.MixProject do
     [
       # lib para requests seguros
       {:ssl_verify_fun, "~> 1.1.7", manager: :rebar3, override: true},
-      #lib para tratamendode json
       {:poison, "~> 4.0"},
-      # lib para requests http
       {:httpoison, "~> 2.2.1"},
       {:json, "~> 1.4"},
       {:pandex, "~> 0.2.0"}
