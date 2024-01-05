@@ -71,13 +71,22 @@ defmodule FileManagerAiTaskSupervisor do
 
     case Task.await(task, 10000) do
       # se a tarefa for bem sucedida, imprimo o resultado
-      {:ok, result} ->
-        IO.puts(result)
+      {:ok, result, artigo} ->
+        IO.puts("Resposta da API recebida")
+        {_, list} = JSON.decode(result)
 
-        # {_, list} = JSON.decode(result)
+        #itera sobre a lista de resultados e salva cada um na pasta
+        Enum.each(list["value"], fn item ->
+          #url da imagem
+          {_, url} = Map.fetch(item, "thumbnailUrl")
+          #nome da imagem
+          {_, nome} = Map.fetch(item, "name")
+          FileCRUD.baixar_imagem(artigo, url, nome)
+        end)
 
-        # [cabeca | _] = list["choices"]
+        # [cabeca | _] = list["value"]
 
+        # IO.inspect(cabeca)
         # {_, texto} = Map.fetch(cabeca, "text")
 
         # pasta = FileCRUD.crie_pasta(prompt)

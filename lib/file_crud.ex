@@ -6,6 +6,7 @@
 
 defmodule FileCRUD do
   alias RegexCleander
+  alias HTTPoison.{Response}
   # Obtém o caminho do diretório base dependendo do sistema operacional
   # Windows: C:\Users\username\Documents
   # Linux/macOS: /home/username
@@ -83,7 +84,7 @@ defmodule FileCRUD do
   #o módulo de chat usa isso para salvar os arquivos de conversa em pastas separadas
   #cria uma nova pasta
   def crie_pasta(nome_da_pasta) do
-    nome_higienizado = RegexCleander.limpar(nome_da_pasta, "pasta")
+    nome_higienizado = RegexCleander.limpar(nome_da_pasta, "diretorio")
 
     #verifica se a pasta já existe
     unless File.dir?(Path.join(@path, nome_higienizado)) do
@@ -112,5 +113,13 @@ defmodule FileCRUD do
   #verifica se existe uma pasta com o nome fornecido
   def existe_pasta?(nome_da_pasta) do
     File.dir?(Path.join(@path, nome_da_pasta))
+  end
+
+  #faz download de uma imagem
+  def baixar_imagem(nome_da_pasta, url, nome_da_imagem) do
+    IO.puts("tentando baixar imagem" <> nome_da_imagem <> " de " <> url)
+    nome_higienizado = RegexCleander.limpar(nome_da_imagem, "imagem")
+    %HTTPoison.Response{body: body} = HTTPoison.get!(url)
+    File.write!(Path.join(Path.join(@path, nome_da_pasta), nome_higienizado), body)
   end
 end

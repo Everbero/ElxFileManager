@@ -9,12 +9,27 @@ defmodule RegexCleander do
       |> String.replace(~r/[^a-zA-Z0-9.]/, "")
       |> String.trim()
 
+
+    if finalidade == "diretorio" do
+       nome_higienizado
+    end
+
     if finalidade == "arquivo" do
       # Adiciona a extensão .txt se não tiver
-      nome_higienizado <> ".txt"
-    else
-      # se ja tiver a extensão, não adiciona e segue a vida
-      nome_higienizado
+      if String.ends_with?(nome_higienizado, ".txt") do
+        nome_higienizado
+      else
+        nome_higienizado <> ".txt"
+      end
+    end
+
+    if finalidade == "imagem" do
+      # Adiciona a extensão .txt se não tiver
+      if String.ends_with?(nome_higienizado, ".jpg") do
+        nome_higienizado
+      else
+        nome_higienizado <> ".jpg"
+      end
     end
   end
 end
