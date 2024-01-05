@@ -30,13 +30,15 @@ defmodule FileManagerAi do
     IO.puts("1. Criar um arquivo")
     IO.puts("2. Ler um arquivo")
     IO.puts("3. Renomear um arquivo")
-    IO.puts("4. Atualizar um arquivo")
+    # IO.puts("4. Atualizar um arquivo")
     IO.puts("5. Apagar um arquivo")
     IO.puts("6. Listar arquivos")
     #tasks
     #primeira task invoca a api do chatgpt
     IO.puts("7. Criar um artigo")
     IO.puts("8. Adicionar fotos a um artigo")
+    IO.puts("9. Unir imagens ao artigo")
+    IO.puts("10. Converter artigo para html")
     # IO.puts("7. task")
     # IO.puts("8. task")
     # IO.puts("9. task")
@@ -70,6 +72,8 @@ defmodule FileManagerAi do
       # aqui vou taskear de alguma forma, ainda não se o que fazer
       "7" -> criar_artigo()
       "8" -> adicionar_fotos_artigo()
+      "9" -> unir_imagens_ao_artigo()
+      "10" -> converter_artigo_html()
       # "9" -> task()
       # "10" -> task()
       "0" -> adios()
@@ -159,6 +163,18 @@ defmodule FileManagerAi do
   def adicionar_fotos_artigo do
     #chama a função chamar_bing do módulo BingImages
     GerenciadorDeTarefas.rodar_tarefa(:chamar_bing)
+    display_menu()
+  end
+
+  def unir_imagens_ao_artigo do
+    #chama a função une_imagens_ao_artigo do módulo Articuloso
+    GerenciadorDeTarefas.rodar_tarefa(:chamar_articuloso)
+    display_menu()
+  end
+
+  def converter_artigo_html do
+    #chama a função converte_artigo_html do módulo Pandoc
+    GerenciadorDeTarefas.rodar_tarefa(:chamar_pandoc)
     display_menu()
   end
 end

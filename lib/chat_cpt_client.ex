@@ -28,7 +28,7 @@ defmodule ChatGptClient do
       # model é o modelo que a api deve usar para gerar o texto, no caso, o modelo davinci-002 é o modelo mais avançado da openai
       model: "gpt-3.5-turbo-instruct",
       # prompt é o texto que será enviado para a api
-      prompt: "Escreva um artigo com começo meio e fim sobre " <> prompt,
+      prompt: "Escreva um artigo com começo meio e fim sobre " <> prompt <> " formatado em markdown",
       # max_tokens é o número máximo de tokens que a api pode retornar
       max_tokens: 1000,
       # temperature é um parâmetro que controla a aleatoriedade das respostas, quanto maior o valor, mais aleatórias as respostas

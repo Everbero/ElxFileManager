@@ -9,8 +9,11 @@ defmodule GerenciadorDeTarefas do
         FileManagerAiTaskSupervisor.chamar_openai()
       :chamar_bing ->
         FileManagerAiTaskSupervisor.chamar_bing()
-      # outras tarefas entrarão aqui
-      # qualquer outra coisa que não seja uma tarefa válida
+      :chamar_articuloso ->
+        FileManagerAiTaskSupervisor.chamar_articuloso()
+        # qualquer outra coisa que não seja uma tarefa válida
+      :chamar_pandoc ->
+        FileManagerAiTaskSupervisor.chamar_pandoc()
       _ ->
         IO.puts("Tarefa inválida: #{tarefa}")
     end

@@ -5,7 +5,7 @@
 # Porque reinventar a roda, né?
 
 defmodule FileCRUD do
-  alias RegexCleander
+  alias RegexCleaner
   alias HTTPoison.{Response}
   # Obtém o caminho do diretório base dependendo do sistema operacional
   # Windows: C:\Users\username\Documents
@@ -49,7 +49,7 @@ defmodule FileCRUD do
   # Função para criar um novo arquivo com o nome e conteúdo fornecidos
   def crie(filename, content) do
     # limpa o nome do arquivo
-    nome_com_extensao = RegexCleander.limpar(filename, "arquivo")
+    nome_com_extensao = RegexCleaner.limpar(filename, "arquivo")
     # Cria o arquivo
     File.write!(Path.join(@path, nome_com_extensao), content)
   end
@@ -63,6 +63,38 @@ defmodule FileCRUD do
   # Função para atualizar o conteúdo de um arquivo existente com o novo conteúdo fornecido
   def atualize(filename, new_content) do
     File.write!(Path.join(@path, filename), new_content)
+  end
+
+  #cria MDS
+  def cria_md(filename) do
+    # escreve o arquivo destino dentro do diretorio homonimo
+    # File.write!(Path.join(Path.join(@path, filename), filename <> ".md"))
+    # copia o conteudo do arquivo origem
+    File.copy!(
+      Path.join(Path.join(@path, filename), filename <> ".txt"),
+      Path.join(Path.join(@path, filename), filename <> ".md")
+    )
+  end
+
+  #cria html
+  def cria_html(output, nome_do_arquivo, nome_do_arquivo_sem_extensao) do
+    IO.puts("tentando criar html em " <> Path.join(Path.join(@path, nome_do_arquivo), nome_do_arquivo_sem_extensao <> ".html"))
+    # escreve o arquivo destino dentro do diretorio homonimo
+    File.write!(Path.join(Path.join(@path, nome_do_arquivo), nome_do_arquivo_sem_extensao <> ".html"), output)
+  end
+
+  #leia MDS
+  def leia_md(filename) do
+    File.read!(Path.join(Path.join(@path, filename), filename <> ".md"))
+  end
+
+  def adiciona_imagens_md(filename, new_content) do
+    # abre o arquivo
+    File.open!(Path.join(Path.join(@path, filename), filename <> ".md"))
+    # escreve o novo conteudo no final do arquivo
+    File.write!(Path.join(Path.join(@path, filename), filename <> ".md"), new_content, [:append])
+    # File.write!(Path.join(@path, filename), new_content)
+    File.close(Path.join(Path.join(@path, filename), filename <> ".md"))
   end
 
   # Função para deletar um arquivo com o nome fornecido
@@ -80,45 +112,48 @@ defmodule FileCRUD do
     File.rename!(Path.join(@path, filename), Path.join(@path, new_filename))
   end
 
-  #essas funções são utilizadas para criar pastas e salvar arquivos dentro delas
-  #o módulo de chat usa isso para salvar os arquivos de conversa em pastas separadas
-  #cria uma nova pasta
+  # essas funções são utilizadas para criar pastas e salvar arquivos dentro delas
+  # o módulo de chat usa isso para salvar os arquivos de conversa em pastas separadas
+  # cria uma nova pasta
   def crie_pasta(nome_da_pasta) do
-    nome_higienizado = RegexCleander.limpar(nome_da_pasta, "diretorio")
-
-    #verifica se a pasta já existe
+    nome_higienizado = RegexCleaner.limpar(nome_da_pasta, "diretorio")
+    IO.inspect(nome_higienizado)
+    # verifica se a pasta já existe
     unless File.dir?(Path.join(@path, nome_higienizado)) do
-      #se não existir, cria a pasta
+      # se não existir, cria a pasta
       File.mkdir!(Path.join(@path, nome_higienizado))
     end
-    #retorna o nome da pasta
+
+    # retorna o nome da pasta
     nome_higienizado
   end
 
-  #salva um arquivo em uma pasta
+  # salva um arquivo em uma pasta
   def salve_na_pasta(nome_da_pasta, filename, content) do
-    nome_com_extensao = RegexCleander.limpar(filename, "arquivo")
+    nome_com_extensao = RegexCleaner.limpar(filename, "arquivo")
     File.write!(Path.join(Path.join(@path, nome_da_pasta), nome_com_extensao), [content])
-    #retorna o nome do arquivo
-    nome_com_extensao
   end
 
-
-  #bing helper functions
-  #exibe apenas os diretorios dentro de @path
+  # bing helper functions
+  # exibe apenas os diretorios dentro de @path
   def liste_diretorios() do
     File.ls!(@path)
   end
 
-  #verifica se existe uma pasta com o nome fornecido
+  # lista os arquivos dentro de uma pasta
+  def lista_arquivos_no_diretorio(nome_da_pasta) do
+    File.ls!(Path.join(@path, nome_da_pasta))
+  end
+
+  # verifica se existe uma pasta com o nome fornecido
   def existe_pasta?(nome_da_pasta) do
     File.dir?(Path.join(@path, nome_da_pasta))
   end
 
-  #faz download de uma imagem
+  # faz download de uma imagem
   def baixar_imagem(nome_da_pasta, url, nome_da_imagem) do
     IO.puts("tentando baixar imagem" <> nome_da_imagem <> " de " <> url)
-    nome_higienizado = RegexCleander.limpar(nome_da_imagem, "imagem")
+    nome_higienizado = RegexCleaner.limpar(nome_da_imagem, "imagem")
     %HTTPoison.Response{body: body} = HTTPoison.get!(url)
     File.write!(Path.join(Path.join(@path, nome_da_pasta), nome_higienizado), body)
   end

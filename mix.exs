@@ -15,7 +15,7 @@ defmodule FileManager.MixProject do
   def application do
     [
       applications: [:httpoison],
-      extra_applications: [:logger, :public_key, :poison, :json]
+      extra_applications: [:logger, :public_key, :poison, :json, :pandex]
     ]
   end
 
@@ -28,7 +28,8 @@ defmodule FileManager.MixProject do
       {:poison, "~> 4.0"},
       # lib para requests http
       {:httpoison, "~> 2.2.1"},
-      {:json, "~> 1.4"}
+      {:json, "~> 1.4"},
+      {:pandex, "~> 0.2.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

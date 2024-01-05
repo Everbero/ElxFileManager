@@ -26,6 +26,14 @@ defmodule FileManagerAiTaskSupervisor do
       %{
         id: :bing_images_task,
         start: {Task, :start_link, [fn -> chamar_bing() end]}
+      },
+      %{
+        id: :articuloso_task,
+        start: {Task, :start_link, [fn -> chamar_articuloso() end]}
+      },
+      %{
+        id: :pandoc_task,
+        start: {Task, :start_link, [fn -> chamar_pandoc() end]}
       }
     ]
 
@@ -92,6 +100,40 @@ defmodule FileManagerAiTaskSupervisor do
         # pasta = FileCRUD.crie_pasta(prompt)
 
         # FileCRUD.salve_na_pasta(pasta, prompt, texto)
+    end
+  end
+
+
+
+  #chama a função une_imagens_ao_artigo do módulo Articuloso
+  def chamar_articuloso do
+    FileManagerAi.lista_informativa()
+    artigo = IO.gets("Digite o nome do artigo que deseja adicionar fotos: ") |> String.trim()
+    #se o artigo for um diretorio continua
+    if FileCRUD.existe_pasta?(artigo) do
+      #chama a função une_imagens_ao_artigo do módulo Articuloso de forma assincrona
+      task = Task.async(fn -> Articuloso.une_imagens_ao_artigo(artigo) end)
+      #espera a tarefa terminar
+      Task.await(task, 10000)
+      IO.puts("Imagens adicionadas ao artigo com sucesso!")
+    else
+      IO.puts("Artigo não encontrado")
+    end
+  end
+
+  #chama a funcao de criar pagina do pandoc
+  def chamar_pandoc do
+    FileManagerAi.lista_informativa()
+    artigo = IO.gets("Digite o nome do artigo que deseja criar a página: ") |> String.trim()
+    #se o artigo for um diretorio continua
+    if FileCRUD.existe_pasta?(artigo) do
+      #chama a função une_imagens_ao_artigo do módulo Articuloso de forma assincrona
+      task = Task.async(fn -> PandocClient.cria_html(artigo) end)
+      #espera a tarefa terminar
+      Task.await(task, 10000)
+      IO.puts("Página criada com sucesso!")
+    else
+      IO.puts("Artigo não encontrado")
     end
   end
 end
