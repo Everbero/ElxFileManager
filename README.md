@@ -15,14 +15,20 @@ Certifique-se de ter Elixir instalado. Se não tiver, você pode baixá-lo e ins
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/everbero/FileManager.git
-cd FileManager
+$ git clone https://github.com/everbero/FileManager.git
+$ cd FileManager
 ```
+2. Instale as dependências:
 
-2. Execute o programa:
 
 ```bash
-iex -S mix
+$ mix deps.get
+```
+
+3. Execute o programa:
+
+```bash
+$ iex -S mix
 ```
 
 ## Funcionalidades

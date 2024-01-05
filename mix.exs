@@ -14,13 +14,21 @@ defmodule FileManager.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      applications: [:httpoison],
+      extra_applications: [:logger, :public_key, :poison, :json]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      # lib para requests seguros
+      {:ssl_verify_fun, "~> 1.1.7", manager: :rebar3, override: true},
+      #lib para tratamendode json
+      {:poison, "~> 4.0"},
+      # lib para requests http
+      {:httpoison, "~> 2.2.1"},
+      {:json, "~> 1.4"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

@@ -5,6 +5,7 @@
 # Porque reinventar a roda, né?
 
 defmodule FileCRUD do
+  alias RegexCleander
   # Obtém o caminho do diretório base dependendo do sistema operacional
   # Windows: C:\Users\username\Documents
   # Linux/macOS: /home/username
@@ -46,22 +47,8 @@ defmodule FileCRUD do
 
   # Função para criar um novo arquivo com o nome e conteúdo fornecidos
   def crie(filename, content) do
-    # Remove espaços e caracteres especiais do nome do arquivo usando regex
-    # nao queremos que o usuário crie arquivos com nomes estranhos nem espaços
-    # também nao quero ninguém criando scripts maliciosos
-    nome_higienizado =
-      filename
-      |> String.replace(~r/[^a-zA-Z0-9.]/, "") # Permitindo ponto para a extensão, copiei o regex do stackoverflow
-      |> String.trim()
-
-    # Caso o arquivo não termine com .txt, adiciona .txt
-    nome_com_extensao =
-      #se ja tiver a extensão, não adiciona
-      if String.ends_with?(nome_higienizado, ".txt") do
-        nome_higienizado
-      else
-        nome_higienizado <> ".txt"
-      end
+    # limpa o nome do arquivo
+    nome_com_extensao = RegexCleander.limpar(filename, "arquivo")
     # Cria o arquivo
     File.write!(Path.join(@path, nome_com_extensao), content)
   end
@@ -90,5 +77,40 @@ defmodule FileCRUD do
   # função para renomear um arquivo
   def renomeie(filename, new_filename) do
     File.rename!(Path.join(@path, filename), Path.join(@path, new_filename))
+  end
+
+  #essas funções são utilizadas para criar pastas e salvar arquivos dentro delas
+  #o módulo de chat usa isso para salvar os arquivos de conversa em pastas separadas
+  #cria uma nova pasta
+  def crie_pasta(nome_da_pasta) do
+    nome_higienizado = RegexCleander.limpar(nome_da_pasta, "pasta")
+
+    #verifica se a pasta já existe
+    unless File.dir?(Path.join(@path, nome_higienizado)) do
+      #se não existir, cria a pasta
+      File.mkdir!(Path.join(@path, nome_higienizado))
+    end
+    #retorna o nome da pasta
+    nome_higienizado
+  end
+
+  #salva um arquivo em uma pasta
+  def salve_na_pasta(nome_da_pasta, filename, content) do
+    nome_com_extensao = RegexCleander.limpar(filename, "arquivo")
+    File.write!(Path.join(Path.join(@path, nome_da_pasta), nome_com_extensao), [content])
+    #retorna o nome do arquivo
+    nome_com_extensao
+  end
+
+
+  #bing helper functions
+  #exibe apenas os diretorios dentro de @path
+  def liste_diretorios() do
+    File.ls!(@path)
+  end
+
+  #verifica se existe uma pasta com o nome fornecido
+  def existe_pasta?(nome_da_pasta) do
+    File.dir?(Path.join(@path, nome_da_pasta))
   end
 end

@@ -8,9 +8,9 @@
   #    / ____(_) /__  /  |/  /___ _____  ____ _____ ____  _____
   #   / /_  / / / _ \/ /|_/ / __ `/ __ \/ __ `/ __ `/ _ \/ ___/
   #  / __/ / / /  __/ /  / / /_/ / / / / /_/ / /_/ /  __/ /
-  # /_/   /_/_/\___/_/  /_/\__,_/_/ /_/\__,_/\__, /\___/_/
+  # /_/   /_/_/\___/_/  /_/\__,_/_/ /_/\__,_/\__, /\___/_/.ai
   #                                         /____/
-defmodule FileManager do
+defmodule FileManagerAi do
   # iniciar o programa
   def start do
     # chama a função init do módulo FileCRUD pra garantir que a pasta existe
@@ -33,6 +33,10 @@ defmodule FileManager do
     IO.puts("4. Atualizar um arquivo")
     IO.puts("5. Apagar um arquivo")
     IO.puts("6. Listar arquivos")
+    #tasks
+    #primeira task invoca a api do chatgpt
+    IO.puts("7. Criar um artigo")
+    IO.puts("8. Adicionar fotos a um artigo")
     # IO.puts("7. task")
     # IO.puts("8. task")
     # IO.puts("9. task")
@@ -64,8 +68,8 @@ defmodule FileManager do
       # L
       "6" -> listar_arquivos()
       # aqui vou taskear de alguma forma, ainda não se o que fazer
-      # "7" -> task()
-      # "8" -> task()
+      "7" -> criar_artigo()
+      "8" -> adicionar_fotos_artigo()
       # "9" -> task()
       # "10" -> task()
       "0" -> adios()
@@ -143,5 +147,18 @@ defmodule FileManager do
     IO.puts("Arquivos no diretório: ")
     IO.inspect(FileCRUD.liste())
     IO.puts("⁀--------------------------------------------------⁀")
+  end
+
+  #cria um artigo usando a api do chatgpt
+  def criar_artigo do
+    #chama a função chamar_openai do módulo ChatGPT
+    GerenciadorDeTarefas.rodar_tarefa(:chamar_openai)
+    display_menu()
+  end
+
+  def adicionar_fotos_artigo do
+    #chama a função chamar_bing do módulo BingImages
+    GerenciadorDeTarefas.rodar_tarefa(:chamar_bing)
+    display_menu()
   end
 end
