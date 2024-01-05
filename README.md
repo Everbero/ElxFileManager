@@ -8,9 +8,9 @@ FileManager é um programa desenvolvido em Elixir, criado exclusivamente para av
 
 ## Pré-requisitos
 
-Certifique-se de ter Elixir instalado. Se não tiver, você pode baixá-lo e instalá-lo em: [Elixir](https://elixir-lang.org/install.html)
+Certifique-se de ter Elixir instalado. Se não tiver, você pode baixá-lo e instalá-lo em: [Elixir](https://elixir-lang.org/install.html)  
 
-Este projeto usar Rebar porque tem um ploblema com o HTTP_Poison que só resolve usando Rebar, uma gambiarra medonha que me custou horas de sono.
+Este projeto usar Rebar porque tem um ploblema com o HTTP_Poison que só resolve usando Rebar, uma gambiarra medonha que me custou horas de sono.  
 Você TEM QUE instalar o pandoc se não estiver no seu sistema.
 
 Este projeto usa as API's do chatGPT e do Bing Image Search
@@ -18,13 +18,13 @@ Ambas as variáveis devem ser exportadas em ~/.bashrc e se você usa windows, se
 
 ## O que este projeto faz
 
-Cria uma pasta no seus documentos chamada encantos
-Você pode usar o menu para criar arquivos, as funções de 1 a 6 são apenas para isso
-As funções de 7 a 10 são tasks distribuíveis
-A função 7 cria um diretório com um artigo gerado pelo chatGPT
-A função 8 baixa imagens do bing nesse diretório
-A função 9 une o artigo e as imagens em um arquivo de markdown
-A função 10 gera uma página HTML à partir do markdown usando pandocs
+Cria uma pasta no seus documentos chamada encantos  
+Você pode usar o menu para criar arquivos, as funções de 1 a 6 são apenas para isso  
+As funções de 7 a 10 são tasks distribuíveis  
+A função 7 cria um diretório com um artigo gerado pelo chatGPT  
+A função 8 baixa imagens do bing nesse diretório  
+A função 9 une o artigo e as imagens em um arquivo de markdown  
+A função 10 gera uma página HTML à partir do markdown usando pandocs  
 
 ## Executando o programa
 
@@ -57,7 +57,7 @@ $ iex -S mix
 4. Acesse a funcao principal para ver o menu
 
 ```bash
-iex> FileManagerAi.start
+iex(1)> FileManagerAi.start
 ```
 
 Escolha uma das opções e divirta-se
